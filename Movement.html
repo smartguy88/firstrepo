@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Movement</title>
+</head>
+<body>
+  <script>
+    console.log("Script Started");
+    CANVAS_WIDTH = 800;
+    CANVA_HEIGHT = 600;
+    var canvas = document.createElement('canvas');
+    var c = canvas.getContext('2d');
+    canvas.width = CANVAS_WIDTH;
+    canvas.height = CANVA_HEIGHT;
+    document.body.appendChild(canvas);
+    console.log("Document added.");
+
+    x = 400;
+    y = 300;
+    var Speed = 30;
+    var LeftArrowKeyCode = 37;
+    var leftArrowDown = false;
+    var RightArrowKeyCode = 39;
+    var rightArrowDown = false;
+    var UpArrowKeyCode = 38;
+    var upArrowDown = false;
+    var DownArrowKeyCode = 40;
+    var downArrowDown = false;
+    var dot = new Image();
+    dot.src = 'dot.jpg';
+    var background = new Image();
+    background.src = 'background.png';
+    var enemieImage = new Image();
+    enemieImage.src = 'dot - enemie.jpg';
+    var enemies = [30, 0, 60, 0];
+    var eCounter = 0;
+
+    document.addEventListener('keydown', onKeyDown);
+    document.addEventListener('keyup', onKeyUp);
+    //document.addEventListener('load', onLoad);
+    window.requestAnimationFrame(loop);
+
+    console.log("Added event listeners.");
+
+    function onKeyDown(event) {
+      //console.log("onKeyDown Called");
+      if (event.keyCode === LeftArrowKeyCode) {
+        leftArrowDown = true;
+      } else if (event.keyCode === RightArrowKeyCode) {
+        rightArrowDown = true;
+      } else if (event.keyCode === UpArrowKeyCode) {
+        upArrowDown = true;
+      } else if (event.keyCode == DownArrowKeyCode) {
+        downArrowDown = true;
+      }
+      window.requestAnimationFrame(loop);
+    }
+
+    function onKeyUp(event) {
+      //console.log("onKeyUp Called");
+      if (event.keyCode === LeftArrowKeyCode) {
+        leftArrowDown = false;
+      } else if (event.keyCode === RightArrowKeyCode) {
+        rightArrowDown = false;
+      } else if (event.keyCode === UpArrowKeyCode) {
+        upArrowDown = false;
+      } else if (event.keyCode == DownArrowKeyCode) {
+        downArrowDown = false;
+      }
+      //window.requestAnimationFrame(loop)
+    }
+    function onLoad() {
+      //console.log("onLoad Called");
+      window.requestAnimationFrame(loop);
+    }
+    function loop() {
+      //console.log("loop Called");
+      update();
+      draw();
+      //window.requestAnimationFrame(loop);
+    }
+    function update() {
+      //console.log("update Called");
+      if (leftArrowDown && (x - Speed) > 0) {
+        x -= Speed;
+      }
+      if (rightArrowDown && (x + Speed) < 780) {
+        x += Speed;
+      }
+      if (upArrowDown && (y - Speed) > 0) {
+        y -= Speed;
+      }
+      if (downArrowDown && (y + Speed) < 600) {
+        y += Speed;
+      }
+      function updateEnemies() {
+        eCounter += 0.11;
+        xCounter = 30
+        for (var i = i < 10; i++;) {
+          enemies[i] = Math.sin(eCounter + xCounter * 2) * 800;
+          enemies[i + 1] = xCounter;
+          xCounter + 30;
+        }
+      }
+      updateEnemies();
+    }
+    function draw() {
+      //console.log("draw Called")
+      for (i = 0; i < 10; i + 2) {
+        c.drawImage(enemieImage, enemies[i], enemies[i + 1], 30, 30);
+      }
+    }
+  </script>
+</body>
+</html>

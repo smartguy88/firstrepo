@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Runner</title>
+</head>
+<body>
+<script>
+    CANVAS_WIDTH = 800;
+    CANVA_HEIGHT = 600;
+    var canvas = document.createElement('canvas');
+    var c = canvas.getContext('2d');
+    canvas.width = CANVAS_WIDTH;
+    canvas.height = CANVA_HEIGHT;
+    document.body.appendChild(canvas);
+
+    // Varibles/Constants
+    GROUND_Y = 40;
+    SPACE_KEY_CODE = 32;
+    RUNNER_Y_ACELERATION = 1;
+    RUNNER_X_ACELERATION = 0.1;
+    Runner_X_Speed = 1;
+    scroll = 0;
+    RunnerX = 20;
+    RunnerY = GROUND_Y;
+    RunnerYAceleration = 0;
+    space_Key_Down = false;
+
+    //Setup
+    var runnerImage = new Image();
+    runnerImage.src = 'Runner.png'
+    var backgroundImage = new Image();
+    backgroundImage.src = 'Background.png'
+
+    window.addEventListener('keydown', onKeyDown);
+    window.addEventListener('keyup', onKeyUp);
+    window.addEventListener('load', start);
+
+    function start() {
+        window.requestAnimationFrame(mainLoop);
+    }
+    //Main Loop
+    function mainLoop() {
+        update();
+        draw();
+        window.requestAnimationFrame(mainLoop);
+    }
+    //Player Input
+    function onKeyDown(event) {
+        if (event.keyCode === SPACE_KEY_CODE) {
+            space_Key_Down = true
+        }
+    }
+    function onKeyUp(event) {
+        if (event.keyCode === SPACE_KEY_CODE) {
+            space_Key_Down = false;
+        }
+    }
+    //Update
+    function update() {
+      RunnerX += Runner_X_Speed;
+      Runner_X_Speed *= RUNNER_X_ACELERATION
+    }
+    //Draw
+    function draw() {
+      c.drawImage(runnerImage, RunnerX - scroll, RunnerY);
+      c.drawImage(backgroundImage,  CANVA_HEIGHT, CANVAS_WIDTH / 2)
+    }
+</script>
+</body>
+</html>
